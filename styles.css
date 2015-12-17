@@ -1,0 +1,65 @@
+@import url(https://fonts.googleapis.com/css?family=Inconsolata);
+
+body {
+	font-family: Inconsolata;
+	font-size: 24pt;
+}
+
+#btn-clear {
+}
+
+#btn-clear, #btn-equals {
+	padding: 35px 11px;
+}
+
+
+.buttons-main {
+	display: inline-block;
+	width: 256px;
+}
+
+.buttons-right {
+	display: inline-block;
+	width: 50px;
+	float: right;
+}
+
+.buttons-wrapper {
+	width: 318px;
+	margin: 20px auto;
+}
+
+.calc-btn {
+	border: 2px solid #CCCCCC;
+	display: inline-block;
+	padding: 4px 11px;
+	text-align: center;
+	margin: 8px 0;
+	background-color: #EEEEEE;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-webkit-user-select: none;
+}
+
+.calc-btn:hover {
+	border: 2px solid #EEEEEE;
+	background-color: #FFFFFF;
+	cursor: pointer;
+}
+
+.calculator {
+	width: 350px;
+	margin: auto;
+	margin-top: 100px;
+	border: 2px solid #EEEEEE;
+	padding: 20px;
+}
+
+#screen {
+	width: 310px;
+	border: 2px solid #EEEEEE;
+	background-color: #95A799;
+	padding: 5px;
+	text-align: right;
+	margin: auto;
+}
