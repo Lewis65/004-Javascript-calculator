@@ -1,23 +1,12 @@
-/*This will be a calculator which needs to:
-Add, subtract, multiply, divide
-Enter 0 through 9
-Have a clear button
-Store 3 numbers: The first, second and result
-Display numbers on screen as appropriate during operations
-Using jquery, make number and operation buttons do their thing
-Account for edge cases such as:
-	operand first
-	divide by 0 and similar
-	multiple operands/operand switching mid-calc
-Look a bit like a calculator if possible*/
-
-var numberA = null;
+var numberA = 0;
 var numberB = null;
 var currentResult = 0;
 //Has an operator been pressed?
 var operator = false;
 //Was an operator the last key pressed?
 var operatorLast = false;
+//What is the current operator?
+var operatorPressed = false;
 //Was a decimal the last key pressed?
 var decimalLast = false;
 
@@ -26,11 +15,50 @@ var display = function(n){
 	$("#screen").text(n.toString().slice(0, 19));
 }
 
+var operatorKey = function(op){
+	if (operatorPressed){
+		calculate();
+	}
+	operator = true;
+	operatorLast = true;
+	operatorPressed = op;
+}
+
+var calculate = function(){
+	if (operatorPressed && numberB !== null){
+		switch (operatorPressed){
+			case "+":
+				currentResult = (numberA+numberB);
+				break;
+			case "-":
+				currentResult = (numberA-numberB);
+				break;
+			case "*":
+				currentResult = (numberA*numberB);
+				break;
+			case "/":
+				if (numberB !== 0){
+					currentResult = (numberA/numberB);
+				} else {
+					currentResult = "A lot"
+				}
+				break;
+		}
+	} else {
+		currentResult = numberA;
+	}
+	operatorPressed = false;
+	operatorLast = false;
+	numberA = currentResult;
+	numberB = null;
+	display(currentResult);
+}
+
 var numKey = function(x){
 	if (x === "." && decimalLast){
 		return;
 	}
-	if (! numberA){
+	if (!numberA && !operatorLast){
 		if (x === "."){
 			numberA = "0.";
 		} else {
@@ -54,6 +82,7 @@ var numKey = function(x){
 		numberA = numberA.toString() + x.toString();
 		display(numberA);
 	}
+	operatorLast = false;
 }
 
 $("#btn-clear").click(function(){
@@ -97,6 +126,27 @@ $("#btn-0").click(function(){
 $("#btn-decimal").click(function(){
 	numKey(".");
 	decimalLast = true;
+});
+
+$("#btn-add").click(function(){
+	operatorKey("+")
+});
+$("#btn-subtract").click(function(){
+	operatorKey("-")
+});
+$("#btn-multiply").click(function(){
+	operatorKey("*")
+});
+$("#btn-divide").click(function(){
+	operatorKey("/")
+});
+$("#btn-equals").click(function(){
+	if (operatorPressed){
+		calculate();
+	} else {
+		currentResult = numberA;
+	}
+	operatorPressed = false;
 });
 
 $(document).ready(function(){
